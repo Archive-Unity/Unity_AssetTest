@@ -54,6 +54,15 @@ namespace UnityEngine.UI.TableUI
 
             table.AddComponent<DropdownProperties>().hideFlags = HideFlags.HideInInspector;
             table.GetComponents<DropdownProperties>()[1].Init();
+            
+            table.AddComponent<InputProperties>().hideFlags = HideFlags.HideInInspector;
+            table.GetComponents<InputProperties>()[0].Init();
+
+            table.AddComponent<InputProperties>().hideFlags = HideFlags.HideInInspector;
+            table.GetComponents<InputProperties>()[1].Init();
+
+            table.AddComponent<TextProperties>().hideFlags = HideFlags.HideInInspector;
+            table.AddComponent<TextProperties>().hideFlags = HideFlags.HideInInspector;
 
             //Generate content object
             GameObject content = new GameObject("Content");

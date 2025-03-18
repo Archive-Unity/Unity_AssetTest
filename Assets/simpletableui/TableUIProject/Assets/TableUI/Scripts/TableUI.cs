@@ -125,7 +125,11 @@ namespace UnityEngine.UI.TableUI
         public DropdownProperties dropdownProperties;
         [SerializeField, HideInInspector]
         public DropdownProperties dropdownPropertiesSubset;
-
+        [SerializeField, HideInInspector]
+        public InputProperties inputProperties;
+        [SerializeField, HideInInspector]
+        public InputProperties inputPropertiesSubset;
+        
         [SerializeField, HideInInspector]
         private bool _striped;
         public bool Striped
@@ -280,7 +284,7 @@ namespace UnityEngine.UI.TableUI
 
             dropdownPropertiesSubset.mainTextProperties.applyToCellTypeOfType = TextProperties.CellType.Dropdown;
             dropdownPropertiesSubset.secondTextProperties.applyToCellTypeOfType = TextProperties.CellType.DropdownSecondary;
-
+            
             Vector2 size = GetRectSize(gameObject.GetComponent<RectTransform>());
             size.x = 400;
             size.y = 200f;
@@ -309,6 +313,19 @@ namespace UnityEngine.UI.TableUI
             buttonProperties.mainTextProperties.applyToCellTypeOfType = TextProperties.CellType.Button;
             buttonProperties.mainTextProperties.groupSelectionMethod = GroupSelectionMethod.Body;
 
+            inputProperties = GetComponents<InputProperties>()[0];
+            inputProperties.mainTextProperties = GetComponents<TextProperties>()[9]; // 인덱스 확인 필요
+
+            inputPropertiesSubset = GetComponents<InputProperties>()[1];
+            inputPropertiesSubset.mainTextProperties = GetComponents<TextProperties>()[10]; // 인덱스 확인 필요
+
+            inputPropertiesSubset.isSubset = true;
+            inputPropertiesSubset.groupSelectionMethod = GroupSelectionMethod.MinMax;
+            inputPropertiesSubset.mainTextProperties.groupSelectionMethod = GroupSelectionMethod.MinMax;
+
+            inputProperties.mainTextProperties.applyToCellTypeOfType = TextProperties.CellType.Input;
+            inputPropertiesSubset.mainTextProperties.applyToCellTypeOfType = TextProperties.CellType.Input;
+            
             BorderType = BorderType.Outline;
             Header = true;
             Striped = true;
@@ -1059,6 +1076,20 @@ namespace UnityEngine.UI.TableUI
                     go.transform.GetChild(0).GetComponent<TMP_Dropdown>().onValueChanged.AddListener((int value) => { dropdownProperties.OnDropdownChangeEvent(); });
                 }
             }
+            else if (columnTypes[columnN].Equals(ColumnType.Input))
+            {
+                go = Instantiate(Resources.Load<GameObject>("Prefabs/InputField"));
+                go.name = rowN.ToString() + "," + columnN.ToString();
+                bool inEditor = false;
+#if UNITY_EDITOR
+                inEditor = true;
+                UnityEditor.Events.UnityEventTools.AddPersistentListener(go.GetComponent<TMP_InputField>().onValueChanged, (string value) => { inputProperties.OnInputValueChangeEvent(value); });
+#endif
+                if (!inEditor)
+                {
+                    go.GetComponent<TMP_InputField>().onValueChanged.AddListener((string value) => { inputProperties.OnInputValueChangeEvent(value); });
+                }
+            }
 
                 return go;
         }
@@ -1080,6 +1111,10 @@ namespace UnityEngine.UI.TableUI
             else if (columnTypes[columnN].Equals(ColumnType.Dropdown))
             {
                 obj = c.transform.GetChild(0).GetComponent<TMP_Dropdown>();
+            }
+            else if (columnTypes[columnN].Equals(ColumnType.Input))
+            {
+                obj = c.GetComponent<TMP_InputField>();
             }
             else
             {
@@ -1126,7 +1161,7 @@ namespace UnityEngine.UI.TableUI
         public class ObjectList : ListWrapper<Object> { }
     }
     public enum BorderType { None, Outline, Horizontal, Vertical, Vertical_And_Header, All }
-    public enum ColumnType { Text, Toggle, Button, Dropdown}
+    public enum ColumnType { Text, Toggle, Button, Dropdown, Input }
 
 
 }

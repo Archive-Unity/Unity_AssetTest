@@ -12,7 +12,7 @@ namespace UnityEngine.UI.TableUI
     public class TextProperties : MonoBehaviour
     {
         [System.Serializable]
-        public enum CellType {Text,Button,Dropdown,DropdownSecondary,All}
+        public enum CellType {Text,Button,Dropdown,DropdownSecondary,Input,All}
         
         
 
@@ -268,6 +268,25 @@ namespace UnityEngine.UI.TableUI
                             extraAction?.Invoke(tmp);
                             continue;
                         }catch (Exception) { } 
+                    }
+                }
+            }
+            else if (applyToCellTypeOfType.Equals(CellType.Input))
+            {
+                for (int i = min.x; i < max.x; i++)
+                {
+                    for (int j = min.y; j < max.y; j++)
+                    {
+                        try
+                        {
+                            TMP_InputField inputField = ((TMP_InputField)tu.data[j].list[i]);
+                            TextMeshProUGUI textComponent = inputField.textComponent as TextMeshProUGUI;
+                            typeof(TextMeshProUGUI).GetProperty(targetProp).SetValue(textComponent, prop.GetValue(this));
+                
+                            Utils.SetDirty(textComponent);
+                            extraAction?.Invoke(textComponent);
+                        }
+                        catch (System.Exception) { }
                     }
                 }
             }
