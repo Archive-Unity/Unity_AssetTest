@@ -18,8 +18,9 @@ namespace UnityEngine.UI.TableUI
         bool headerFoldout,bodyFoldout;
 
         Editor bodyCellPropertiesEditor,headerCellPropertiesEditor,selectionCellPropertiesEditor
-            ,togglePropertiesEditor, buttonPropertiesEditor,dropdownPropertiesEditor,togglePropertiesSubsetEditor,buttonPropertiesSubsetEditor,
-            dropdownPropertiesSubsetEditor;
+            ,togglePropertiesEditor, buttonPropertiesEditor,dropdownPropertiesEditor,
+            inputPropertiesEditor, togglePropertiesSubsetEditor,buttonPropertiesSubsetEditor,
+            dropdownPropertiesSubsetEditor, inputPropertiesSubsetEditor;
 
         Vector2 previousSize;
 
@@ -59,6 +60,12 @@ namespace UnityEngine.UI.TableUI
             if (dropdownPropertiesSubsetEditor == null)
                 dropdownPropertiesSubsetEditor = CreateEditor(tableUI.dropdownPropertiesSubset);
 
+            if (inputPropertiesEditor == null)
+                inputPropertiesEditor = CreateEditor(tableUI.inputProperties);
+
+            if (inputPropertiesSubsetEditor == null)
+                inputPropertiesSubsetEditor = CreateEditor(tableUI.inputPropertiesSubset);
+            
             if (labelStyle == null)
             {
                 labelStyle = new GUIStyle();
@@ -270,6 +277,21 @@ namespace UnityEngine.UI.TableUI
                 EditorGUILayout.EndVertical();
             }
         }
+        
+        private void InputProperties()
+        {
+            if (tableUI.columnTypes.Contains(ColumnType.Input))
+            {
+                EditorGUILayout.BeginVertical(new GUIStyle("box"));
+
+                EditorGUI.indentLevel += 1;
+
+                inputPropertiesEditor.OnInspectorGUI();
+
+                EditorGUI.indentLevel -= 1;
+                EditorGUILayout.EndVertical();
+            }
+        }
 
         private void OnSceneGUI()
         {
@@ -306,7 +328,7 @@ namespace UnityEngine.UI.TableUI
                 Vector2Int index = GetFirstValue();
                 EditorGUILayout.Space();
                 if(index.y==0 ||index.x==0)
-                    toolbarValue = GUILayout.Toolbar(toolbarValue, new string[] { "Text", "Toggle", "Button", "Dropdown" }, EditorStyles.toolbarButton);
+                    toolbarValue = GUILayout.Toolbar(toolbarValue, new string[] { "Text", "Toggle", "Button", "Dropdown", "Input" }, EditorStyles.toolbarButton);
                 if (index.x==0 && index.y==0)
                 {
                     if (toolbarValue == 0)
@@ -321,6 +343,9 @@ namespace UnityEngine.UI.TableUI
                     }else if (toolbarValue == 3)
                     {
                         DropdownProperties();
+                    }else if (toolbarValue == 4)
+                    {
+                        InputProperties();
                     }
                     else
                     {
@@ -328,8 +353,22 @@ namespace UnityEngine.UI.TableUI
                     }
                 }else if (index.y == 0)
                 {
+                    // 컬럼 선택 시 활성화할 탭 결정
+                    int selectedColumnIndex = index.x - 1;
+                    ColumnType selectedColumnType = tableUI.columnTypes[selectedColumnIndex];
                     
-                    if (toolbarValue == 0)
+                    // 선택한 컬럼 타입과 일치하는 탭만 활성화
+                    bool isTextTab = (toolbarValue == 0);
+                    bool isToggleTab = (toolbarValue == 1);
+                    bool isButtonTab = (toolbarValue == 2);
+                    bool isDropdownTab = (toolbarValue == 3);
+                    bool isInputTab = (toolbarValue == 4);
+                    // bool isToggleTab = (toolbarValue == 1 && selectedColumnType == ColumnType.Toggle);
+                    // bool isButtonTab = (toolbarValue == 2 && selectedColumnType == ColumnType.Button);
+                    // bool isDropdownTab = (toolbarValue == 3 && selectedColumnType == ColumnType.Dropdown);
+                    // bool isInputTab = (toolbarValue == 4 && selectedColumnType == ColumnType.Input);
+                    
+                    if (isTextTab)
                     {
                         try
                         {
@@ -345,7 +384,7 @@ namespace UnityEngine.UI.TableUI
 
                         }
                         catch (Exception) { }
-                    }else if (toolbarValue==1 && tableUI.columnTypes[index.x - 1].Equals(ColumnType.Toggle))
+                    }else if (isToggleTab)
                     {
                         Vector2Int min = tableUI.togglePropertiesSubset.Min;
                         Vector2Int max = tableUI.togglePropertiesSubset.Max;
@@ -358,7 +397,7 @@ namespace UnityEngine.UI.TableUI
 
 
                     }
-                    else if (toolbarValue==2 && tableUI.columnTypes[index.x - 1].Equals(ColumnType.Button))
+                    else if (isButtonTab)
                     {
                         Vector2Int min = tableUI.buttonPropertiesSubset.Min;
                         Vector2Int max = tableUI.buttonPropertiesSubset.Max;
@@ -372,7 +411,7 @@ namespace UnityEngine.UI.TableUI
 
 
                     }
-                    else if (toolbarValue==3 && tableUI.columnTypes[index.x - 1].Equals(ColumnType.Dropdown))
+                    else if (isDropdownTab)
                     {
                         Vector2Int min = tableUI.dropdownPropertiesSubset.Min;
                         Vector2Int max = tableUI.dropdownPropertiesSubset.Max;
@@ -383,8 +422,18 @@ namespace UnityEngine.UI.TableUI
                         tableUI.dropdownPropertiesSubset.Min = min;
                         tableUI.dropdownPropertiesSubset.Max = max;
                         dropdownPropertiesSubsetEditor.OnInspectorGUI();
-
-
+                    }
+                    else if (isInputTab)
+                    {
+                        Vector2Int min = tableUI.inputPropertiesSubset.Min;
+                        Vector2Int max = tableUI.inputPropertiesSubset.Max;
+                        min.x = index.x - 1;
+                        max.x = index.x;
+                        min.y = 0;
+                        max.y = tableUI.Rows;
+                        tableUI.inputPropertiesSubset.Min = min;
+                        tableUI.inputPropertiesSubset.Max = max;
+                        inputPropertiesSubsetEditor.OnInspectorGUI();
                     }
                     else
                     {
@@ -448,6 +497,18 @@ namespace UnityEngine.UI.TableUI
                         tableUI.dropdownPropertiesSubset.Max = max;
                         dropdownPropertiesSubsetEditor.OnInspectorGUI();
                     }
+                    else if (toolbarValue==4 && tableUI.columnTypes.Contains(ColumnType.Input))
+                    {
+                        Vector2Int min = tableUI.inputPropertiesSubset.Min;
+                        Vector2Int max = tableUI.inputPropertiesSubset.Max;
+                        min.x = 0;
+                        max.x = tableUI.Columns;
+                        min.y = index.y - 1;
+                        max.y = index.y;
+                        tableUI.inputPropertiesSubset.Min = min;
+                        tableUI.inputPropertiesSubset.Max = max;
+                        inputPropertiesSubsetEditor.OnInspectorGUI();
+                    }
                     else
                     {
                         GUILayoutUtility.GetRect(Screen.width, 200f);
@@ -507,6 +568,18 @@ namespace UnityEngine.UI.TableUI
                             tableUI.dropdownPropertiesSubset.Min = min;
                             tableUI.dropdownPropertiesSubset.Max = max;
                             dropdownPropertiesSubsetEditor.OnInspectorGUI();
+                        }
+                        else if (tableUI.columnTypes[index.x - 1].Equals(ColumnType.Input))
+                        {
+                            Vector2Int min = tableUI.inputPropertiesSubset.Min;
+                            Vector2Int max = tableUI.inputPropertiesSubset.Max;
+                            min.x = index.x - 1;
+                            max.x = index.x;
+                            min.y = index.y - 1;
+                            max.y = index.y;
+                            tableUI.inputPropertiesSubset.Min = min;
+                            tableUI.inputPropertiesSubset.Max = max;
+                            inputPropertiesSubsetEditor.OnInspectorGUI();
                         }
 
                     }
