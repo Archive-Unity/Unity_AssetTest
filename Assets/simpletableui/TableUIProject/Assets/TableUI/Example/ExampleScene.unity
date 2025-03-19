@@ -8075,6 +8075,8 @@ GameObject:
   - component: {fileID: 910546810}
   - component: {fileID: 910546809}
   - component: {fileID: 910546808}
+  - component: {fileID: 910546825}
+  - component: {fileID: 910546824}
   m_Layer: 5
   m_Name: Table
   m_TagString: Untagged
@@ -8120,7 +8122,7 @@ MonoBehaviour:
   secondTextProperties: {fileID: 910546814}
   groupSelectionMethod: 3
   min: {x: 0, y: 0}
-  max: {x: 0, y: 0}
+  max: {x: 1, y: 6}
   colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -8204,7 +8206,7 @@ MonoBehaviour:
   secondTextProperties: {fileID: 0}
   groupSelectionMethod: 3
   min: {x: 0, y: 0}
-  max: {x: 0, y: 0}
+  max: {x: 1, y: 6}
   colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -8281,8 +8283,8 @@ MonoBehaviour:
   mainTextProperties: {fileID: 0}
   secondTextProperties: {fileID: 0}
   groupSelectionMethod: 3
-  min: {x: 2, y: 0}
-  max: {x: 3, y: 6}
+  min: {x: 0, y: 0}
+  max: {x: 1, y: 6}
   colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -8358,7 +8360,7 @@ MonoBehaviour:
   applyToCellTypeOfType: 3
   groupSelectionMethod: 3
   min: {x: 0, y: 0}
-  max: {x: 0, y: 0}
+  max: {x: 1, y: 6}
   _fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   _fontStyle: 0
   _fontSize: 15
@@ -8385,7 +8387,7 @@ MonoBehaviour:
   applyToCellTypeOfType: 2
   groupSelectionMethod: 3
   min: {x: 0, y: 0}
-  max: {x: 0, y: 0}
+  max: {x: 1, y: 6}
   _fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   _fontStyle: 0
   _fontSize: 15
@@ -8412,7 +8414,7 @@ MonoBehaviour:
   applyToCellTypeOfType: 1
   groupSelectionMethod: 3
   min: {x: 0, y: 0}
-  max: {x: 0, y: 0}
+  max: {x: 1, y: 6}
   _fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   _fontStyle: 0
   _fontSize: 15
@@ -8519,8 +8521,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   applyToCellTypeOfType: 4
   groupSelectionMethod: 3
-  min: {x: 1, y: 0}
-  max: {x: 2, y: 6}
+  min: {x: 0, y: 0}
+  max: {x: 1, y: 6}
   _fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   _fontStyle: 17
   _fontSize: 15
@@ -8600,14 +8602,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skin: {fileID: 11400000, guid: 70f74ecfa2a799246ac78dfbda33dd79, type: 2}
   _values:
-  - list: 00000100000000000000
-  - list: 000001000000
-  - list: 000001000000
-  - list: 000001000000
-  - list: 000001000000
-  - list: 000001000000
-  - list: 000001000000
-  chosenCell: {x: 1, y: -1}
+  - list: 00010000000000000000
+  - list: 000100000000
+  - list: 000100000000
+  - list: 000100000000
+  - list: 000100000000
+  - list: 000100000000
+  - list: 000100000000
+  chosenCell: {x: 0, y: -1}
   _columnsWidth:
   - 132.80005
   - 132.80005
@@ -8671,8 +8673,8 @@ MonoBehaviour:
   buttonPropertiesSubset: {fileID: 910546810}
   dropdownProperties: {fileID: 910546809}
   dropdownPropertiesSubset: {fileID: 910546808}
-  inputProperties: {fileID: 0}
-  inputPropertiesSubset: {fileID: 0}
+  inputProperties: {fileID: 910546825}
+  inputPropertiesSubset: {fileID: 910546824}
   _striped: 1
   _mainColor: {r: 1, g: 1, b: 1, a: 1}
   _secondaryColor: {r: 0.8962264, g: 0.8962264, b: 0.8962264, a: 1}
@@ -8689,7 +8691,73 @@ MonoBehaviour:
   - {fileID: 900497489}
   - {fileID: 1178247474}
   columnTypes: 0000000004000000010000000200000003000000
-  undoRedoEvent: Select Table (GameObject)
+  undoRedoEvent: Modified Is Subset in Table
+--- !u!114 &910546824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910546806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83b9cd3f87aaace4e8b07a4ade333528, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isSubset: 0
+  mainTextProperties: {fileID: 0}
+  secondTextProperties: {fileID: 0}
+  groupSelectionMethod: 2
+  min: {x: 0, y: 0}
+  max: {x: 1, y: 6}
+  colors:
+    m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
+    m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0}
+    m_PressedColor: {r: 0, g: 0, b: 0, a: 0}
+    m_SelectedColor: {r: 0, g: 0, b: 0, a: 0}
+    m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
+    m_ColorMultiplier: 0
+    m_FadeDuration: 0
+  backgroundImage: {fileID: 0}
+  secondaryImage: {fileID: 0}
+  mainRect: {x: 0, y: 0, z: 0, w: 0}
+  secondRect: {x: 0, y: 0, z: 0, w: 0}
+  onInputValueChange:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &910546825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910546806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83b9cd3f87aaace4e8b07a4ade333528, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isSubset: 0
+  mainTextProperties: {fileID: 0}
+  secondTextProperties: {fileID: 0}
+  groupSelectionMethod: 2
+  min: {x: 0, y: 0}
+  max: {x: 0, y: 0}
+  colors:
+    m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
+    m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0}
+    m_PressedColor: {r: 0, g: 0, b: 0, a: 0}
+    m_SelectedColor: {r: 0, g: 0, b: 0, a: 0}
+    m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
+    m_ColorMultiplier: 0
+    m_FadeDuration: 0
+  backgroundImage: {fileID: 0}
+  secondaryImage: {fileID: 0}
+  mainRect: {x: 0, y: 0, z: 0, w: 0}
+  secondRect: {x: 0, y: 0, z: 0, w: 0}
+  onInputValueChange:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &915591606
 GameObject:
   m_ObjectHideFlags: 0
