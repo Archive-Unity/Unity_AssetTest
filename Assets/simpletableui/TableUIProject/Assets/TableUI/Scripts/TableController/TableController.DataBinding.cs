@@ -132,56 +132,23 @@ public partial class TableController : MonoBehaviour
                 Debug.LogWarning($"행 {row}가 테이블 데이터의 범위를 벗어납니다 (테이블 데이터 행 수: {table.data.Count})");
                 continue;
             }
+            
+            Debug.Log($"행 {row} 데이터 할당: 데이터 열 수={data[row].Count}, 테이블 열 수={table.Columns}");
 
-            if (table.data[row] == null || table.data[row].list == null)
-            {
-                Debug.LogWarning($"행 {row}의 리스트가 null입니다.");
-                continue;
-            }
-
-            Debug.Log($"행 {row} 데이터 할당: 데이터 열 수={data[row].Count}, 테이블 열 수={table.data[row].list.Count}");
-
+            // 각 열에 데이터 할당
             for (var col = 0; col < data[row].Count && col < table.Columns; col++)
             {
-                if (col >= table.data[row].list.Count)
-                {
-                    Debug.LogWarning($"열 {col}이 테이블 데이터의 범위를 벗어납니다 (행 {row}의 열 수: {table.data[row].list.Count})");
-                    continue;
-                }
-
-                var valueText = data[row][col].ToString();
-
                 try
                 {
-                    var cellObject = table.data[row].list[col];
-
-                    if (cellObject == null)
-                    {
-                        Debug.LogWarning($"셀({row}, {col})의 객체가 null입니다.");
-                        continue;
-                    }
-
-                    // 셀 타입에 따라 처리
-                    if (cellObject is TMP_InputField inputField)
-                    {
-                        inputField.text = valueText;
-                        // Debug.Log($"셀({row}, {col})에 값 '{valueText}' 할당 성공 (InputField)");
-                    }
-                    else if (cellObject is TextMeshProUGUI textField)
-                    {
-                        textField.text = valueText;
-                        // Debug.Log($"셀({row}, {col})에 값 '{valueText}' 할당 성공 (TextMeshProUGUI)");
-                    }
-                    else
-                    {
-                        Debug.LogWarning($"셀({row}, {col})의 타입({cellObject.GetType().Name})은 지원되지 않습니다.");
-                    }
+                    // SetCellNumericValue 메서드 사용하여 값 설정
+                    // 이 메서드는 내부적으로 예외 처리 및 로깅을 수행
+                    SetCellNumericValue(row, col, data[row][col]);
                 }
                 catch (Exception e)
                 {
-                    // [Fix this comment]: 초기 데이터 할당시 OnValueChanged가 오동작 하지만 이 이벤트 구조는 이후에 정상 작동
-                    // [Fix this comment]: 때문에 이 오류 구문에 입장하더라도 초기 할당 오류이므로 추가 처리하지 않음
-                    // Debug.LogError($"셀({row}, {col})에 데이터 할당 중 오류: {e.Message}\n스택 트레이스: {e.StackTrace}");
+                    // // [Fix this comment]: 초기 데이터 할당시 OnValueChanged가 오동작 하지만 이 이벤트 구조는 이후에 정상 작동
+                    // // [Fix this comment]: 때문에 이 오류 구문에 입장하더라도 초기 할당 오류이므로 추가 처리하지 않음
+                    // Debug.LogError($"셀({row}, {col}) 데이터 할당 중 심각한 오류: {e.Message}");
                 }
             }
         }

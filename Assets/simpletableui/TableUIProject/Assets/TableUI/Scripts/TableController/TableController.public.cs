@@ -7,6 +7,8 @@ using TMPro;
 
 public partial class TableController : MonoBehaviour
 {
+    #region Import dataset
+    
     /// <summary>
     /// 외부 데이터셋을 테이블로 가져와 표시합니다.
     /// </summary>
@@ -24,6 +26,10 @@ public partial class TableController : MonoBehaviour
 
         // 코루틴 시작하고 성공적으로 시작되었으면 true 반환
         StartCoroutine(ImportDatasetCoroutine(dataset, labels, resetTable));
+        
+        // // 약간의 딜레이 후 초기화 (테이블이 완전히 로드된 후)
+        // StartCoroutine(InitializeTableWithDelay());
+        
         return true;
     }
 
@@ -182,6 +188,56 @@ public partial class TableController : MonoBehaviour
             }
         }
     }
+    
+    #endregion
+
+    #region Export dataset
+
+    /// <summary>
+    /// 현재 테이블 데이터를 문자열 데이터셋으로 내보냅니다.
+    /// </summary>
+    /// <param name="dataset">테이블 데이터를 담을 2차원 문자열 리스트</param>
+    /// <param name="labels">헤더 레이블을 담을 문자열 리스트</param>
+    /// <returns>성공 여부</returns>
+    public bool ExportDataset(out List<List<string>> dataset, out List<string> labels)
+    {
+        dataset = new List<List<string>>();
+        labels = new List<string>();
+    
+        if (table == null || table.Rows <= 0)
+        {
+            Debug.LogWarning("ExportDataset: 테이블이 비어 있습니다.");
+            return false;
+        }
+    
+        // 헤더 레이블 추출
+        if (table.Header)
+        {
+            for (int col = 0; col < table.Columns; col++)
+            {
+                labels.Add(GetCellTextValue(0, col));
+            }
+        }
+        
+        // 데이터 셀 추출 (헤더 제외)
+        int startRow = table.Header ? 1 : 0;
+    
+        for (int row = startRow; row < table.Rows; row++)
+        {
+            List<string> rowData = new List<string>();
+        
+            for (int col = 0; col < table.Columns; col++)
+            {
+                rowData.Add(GetCellTextValue(row, col));
+            }
+        
+            dataset.Add(rowData);
+        }
+    
+        return true;
+    }
+
+    #endregion
     
     /// <summary>
     /// CSV 형식의 문자열을 파싱하여 테이블로 가져옵니다.
