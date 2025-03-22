@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 
 // InputTableExample의 데이터 바인딩 기능을 담당하는 partial 클래스
-public partial class InputTableExample : MonoBehaviour
+public partial class TableController : MonoBehaviour
 {
     // 샘플 데이터를 저장할 2차원 리스트
     private List<List<float>> tableData;

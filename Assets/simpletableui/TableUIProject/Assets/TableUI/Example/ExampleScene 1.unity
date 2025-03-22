@@ -8801,7 +8801,7 @@ MonoBehaviour:
   - {fileID: 900497489}
   - {fileID: 1178247474}
   columnTypes: 0400000004000000040000000400000004000000
-  undoRedoEvent: Select Table (GameObject)
+  undoRedoEvent: Driving RectTransform
 --- !u!114 &910546824
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UI.TableUI;
 
-public partial class InputTableExample : MonoBehaviour
+public partial class TableController : MonoBehaviour
 {
     
 }

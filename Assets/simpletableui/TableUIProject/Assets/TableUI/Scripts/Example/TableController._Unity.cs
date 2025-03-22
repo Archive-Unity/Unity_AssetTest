@@ -4,7 +4,7 @@ using UnityEngine.UI.TableUI;
 using System.Collections;
 
 // InputTableExample의 Unity 예약 메서드들을 포함하는 partial 클래스
-public partial class InputTableExample : MonoBehaviour
+public partial class TableController : MonoBehaviour
 {
     public TableUI table;
     public Text outputText; // 출력 텍스트를 표시할 UI Text
@@ -33,6 +33,10 @@ public partial class InputTableExample : MonoBehaviour
         // 테이블에 데이터 바인딩
         yield return StartCoroutine(BindDataToTableCoroutine(tableData));
     
+        
+        // // 또는 데이터에 맞게 자동으로 크기 조정
+        // ResizeTableToFitData(tableData);
+        
         Debug.Log("테이블 초기화 및 데이터 바인딩 완료");
     }
 
@@ -60,7 +64,7 @@ public partial class InputTableExample : MonoBehaviour
         yield return null;
         
         // 테이블 초기화
-        InitializeTable();
+        InitializeTable(resetColumns:true, defaultColumnCount: 3);
         
         // 입력 이벤트 핸들러 등록
         if (table != null && table.inputProperties != null)
