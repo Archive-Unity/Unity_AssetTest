@@ -9246,14 +9246,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skin: {fileID: 11400000, guid: 70f74ecfa2a799246ac78dfbda33dd79, type: 2}
   _values:
-  - list: 01010101010100000000
-  - list: 010101010101
-  - list: 010101010101
-  - list: 010101010101
-  - list: 010101010101
-  - list: 010101010101
-  - list: 010101010101
-  chosenCell: {x: 0, y: 0}
+  - list: 00000000000000000000
+  - list: 000000000000
+  - list: 000000000000
+  - list: 000000000000
+  - list: 000000000000
+  - list: 000000000000
+  - list: 000000000000
+  chosenCell: {x: -1, y: -1}
   _columnsWidth:
   - 132.80005
   - 132.80005
@@ -9352,8 +9352,8 @@ MonoBehaviour:
   mainTextProperties: {fileID: 0}
   secondTextProperties: {fileID: 0}
   groupSelectionMethod: 2
-  min: {x: 0, y: 3}
-  max: {x: 5, y: 4}
+  min: {x: 0, y: 0}
+  max: {x: 5, y: 1}
   colors:
     m_NormalColor: {r: 0, g: 0, b: 0, a: 0}
     m_HighlightedColor: {r: 0, g: 0, b: 0, a: 0}
